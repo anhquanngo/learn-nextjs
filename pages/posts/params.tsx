@@ -5,7 +5,6 @@ export interface ParamsPageProps {}
 
 export default function ParamsPage(props: ParamsPageProps) {
   const router = useRouter();
-  console.log('🚀 ~ file: [...params].tsx ~ line 8 ~ ParamsPage ~ router', router);
   return (
     <div>
       <h1>Params Page</h1>
