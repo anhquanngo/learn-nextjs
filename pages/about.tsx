@@ -25,7 +25,8 @@ export default function AboutPage(props: AboutPageProps) {
       { shallow: true }
     );
   }
-
+  // shallow : false thì server sẽ rerender
+  // shallow : true thì client sẽ rerender mà server ko rereder
   useEffect(() => {
     if (!page) return;
     (async () => {
