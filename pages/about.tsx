@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Header from "@/components/common/header";
 // import dynamic from 'next/dynamic';
 import { useRouter } from "next/router";
+import { MainLayout } from "@/components/layout";
 
 // dynamic components sẽ giúp component đó chỉ render ở client và ko render trên server
 // const Header = dynamic(() => import('@/components/common/header'), { ssr: false });
@@ -11,7 +12,7 @@ export interface AboutPageProps {}
 export default function AboutPage(props: AboutPageProps) {
   const router = useRouter();
   const [postList, setpostList] = useState([]);
-  console.log("router.query", router.query);
+  // console.log("router.query", router.query);
   const page = router.query?.page;
   function handelNextClick() {
     router.push(
@@ -37,7 +38,7 @@ export default function AboutPage(props: AboutPageProps) {
   }, [page]);
 
   return (
-    <div>
+    <>
       <h1>About Page</h1>
       <Header />
       <ul className="post-list">
@@ -46,12 +47,13 @@ export default function AboutPage(props: AboutPageProps) {
         ))}
       </ul>
       <button onClick={handelNextClick}>Next page</button>
-    </div>
+    </>
   );
 }
+AboutPage.Layout = MainLayout;
 
 export async function getStaticProps() {
-  console.log("get static props");
+  // console.log("get static props");
   return {
     props: {},
   };
