@@ -19,6 +19,7 @@
       "@/components/*":["./components/*"],
       "@/styles/*":["./styles/*"],
       "@/constants/*":["./constants/*"],
+      "@/api_client/*":["./api-client/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

@@ -1,7 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import httpProxy from 'http-proxy';
-import { resolve } from 'path/posix';
 import Cookies from 'cookies';
 
 type Data = {
@@ -29,7 +28,7 @@ export default function handler(
     }
 
     // don't send cookies to API server
-    req.headers.cookie = '';
+    // req.headers.cookie = '';
 
     // /api/students
     // /https://js-post-api.herrokuapp.com/api/students
@@ -38,7 +37,7 @@ export default function handler(
       changeOrigin: true,
       selfHandleResponse: false
     })
-    proxy.once('proxyReq', () => {
+    proxy.once('proxyRes', () => {
       resolve(true)
     })
   })

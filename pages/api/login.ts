@@ -38,7 +38,7 @@ export default function handler(
 
                 // convert token to cookies
                 const cookies = new Cookies(req, res, { secure: process.env.NODE_ENV === 'development' });
-                cookies.set('accessToken', accessToken, {
+                cookies.set('access_token', accessToken, {
                     httpOnly: true,
                     sameSite: 'lax',
                     expires: new Date(expireAt)
@@ -55,7 +55,7 @@ export default function handler(
             });
         }
 
-        proxy.once('proxyReq', handleLoginResponse)
+        proxy.once('proxyRes', handleLoginResponse)
 
         // /api/students
         // /https://js-post-api.herrokuapp.com/api/students
