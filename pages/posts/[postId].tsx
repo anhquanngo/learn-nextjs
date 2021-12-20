@@ -1,6 +1,6 @@
-import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
-import { useRouter } from 'next/router';
-import * as React from 'react';
+import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
+import { useRouter } from "next/router";
+import * as React from "react";
 
 export interface PostPageProps {
   post: any;
@@ -9,7 +9,11 @@ export interface PostPageProps {
 export default function DetailPostPage(props: PostPageProps) {
   const router = useRouter();
   const { post } = props;
-  console.log('🚀 ~ file: [postId].tsx ~ line 12 ~ DetailPostPage ~ post', post);
+  console.log("🚀 ~ file: [postId].tsx ~ line 12 ~ DetailPostPage ~ post", post);
+  if (router.isFallback) {
+    return <div style={{ fontSize: "2em", textAlign: "center" }}> Loading ... </div>;
+  }
+
   if (!post) return null;
 
   return (
@@ -24,13 +28,13 @@ export default function DetailPostPage(props: PostPageProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  console.log('\nGET STATIC PATH');
-  const response = await fetch('https://js-post-api.herokuapp.com/api/posts?_page=1');
+  console.log("\nGET STATIC PATH");
+  const response = await fetch("https://js-post-api.herokuapp.com/api/posts?_page=1");
   const data = await response.json();
 
   return {
     paths: data.data.map((post: any) => ({ params: { postId: post.id } })),
-    fallback: false,
+    fallback: true,
   };
 };
 
@@ -39,7 +43,7 @@ export const getStaticProps: GetStaticProps<PostPageProps> = async (
 ) => {
   // server-side
   // build-time
-  console.log('\nGET STATIC PROPS', context.params?.postId);
+  console.log("\nGET STATIC PROPS", context.params?.postId);
   const postId = context.params?.postId;
   if (!postId) return { notFound: true };
 
@@ -51,5 +55,11 @@ export const getStaticProps: GetStaticProps<PostPageProps> = async (
     props: {
       post: data,
     },
+    revalidate: 300,
   };
 };
+
+// revalidate: 5s
+// Khi build sẽ có các bài post được render thành HTML
+// Sau 5s thì sẽ tricker request
+// fallback: true
